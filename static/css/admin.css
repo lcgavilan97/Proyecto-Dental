@@ -1,0 +1,170 @@
+/* Nuba Dental — Admin Theme */
+
+:root {
+    --nd-primary: #264653;
+    --nd-secondary: #2a9d8f;
+    --nd-accent: #e76f51;
+    --nd-light: #f8f9fa;
+    --nd-white: #ffffff;
+}
+
+/* Header */
+#header {
+    background: var(--nd-primary);
+    color: var(--nd-white);
+}
+
+#header a:link, #header a:visited {
+    color: var(--nd-white);
+}
+
+#branding h1 {
+    color: var(--nd-white);
+    font-weight: 700;
+}
+
+#branding h1 a {
+    color: var(--nd-white);
+}
+
+/* User tools */
+#user-tools a {
+    border-bottom: none;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+#user-tools a:hover {
+    color: var(--nd-white);
+}
+
+/* Module headers */
+.module h2, .module caption, .inline-group h2 {
+    background: var(--nd-secondary);
+    color: var(--nd-white);
+}
+
+div.breadcrumbs {
+    background: #1a3a44;
+    color: var(--nd-white);
+}
+
+div.breadcrumbs a {
+    color: var(--nd-white);
+}
+
+/* Buttons */
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: var(--nd-secondary);
+    color: var(--nd-white);
+}
+
+.button:hover, input[type=submit]:hover, input[type=button]:hover {
+    background: #1f7a6f;
+}
+
+.button.default, input[type=submit].default, .submit-row input.default {
+    background: var(--nd-accent);
+    font-weight: 700;
+}
+
+.button.default:hover, input[type=submit].default:hover {
+    background: #d05a3e;
+}
+
+/* Links */
+a:link, a:visited {
+    color: var(--nd-secondary);
+}
+
+a:hover {
+    color: var(--nd-accent);
+}
+
+/* Sidebar */
+#nav-sidebar {
+    background: var(--nd-light);
+}
+
+#nav-sidebar .current-model {
+    background: var(--nd-secondary);
+    color: var(--nd-white);
+}
+
+#nav-sidebar .current-model a {
+    color: var(--nd-white);
+}
+
+/* Selected rows */
+tr.selected {
+    background: #e8f5f3;
+}
+
+/* Paginator */
+.paginator a:link, .paginator a:visited {
+    background: var(--nd-secondary);
+    color: var(--nd-white);
+}
+
+.paginator a:hover {
+    background: #1f7a6f;
+}
+
+.paginator .this-page {
+    background: var(--nd-primary);
+    color: var(--nd-white);
+}
+
+/* Calendar widget */
+.calendar td.selected a {
+    background: var(--nd-secondary);
+    color: var(--nd-white);
+}
+
+.calendar td a:hover {
+    background: var(--nd-secondary);
+    color: var(--nd-white);
+}
+
+.calendar .today a {
+    background: var(--nd-accent);
+    color: var(--nd-white);
+}
+
+/* Date picker */
+.calendarbox .calendarnav-previous, .calendarbox .calendarnav-next {
+    background: var(--nd-primary);
+    color: var(--nd-white);
+}
+
+/* Delete confirmation */
+.deletelink {
+    background: #ba2121;
+}
+
+/* Change form */
+#changelist .toplinks {
+    border-bottom: 1px solid #ddd;
+}
+
+/* Object tools */
+.object-tools a:link {
+    background: var(--nd-secondary);
+}
+
+.object-tools a:hover {
+    background: #1f7a6f;
+}
+
+/* Dashboard */
+.dashboard .module table th {
+    width: 100%;
+}
+
+.dashboard .module table td {
+    white-space: nowrap;
+}
+
+/* Footer */
+#footer {
+    background: var(--nd-light);
+}

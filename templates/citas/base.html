@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Nuba Dental{% endblock %}</title>
+    <link rel="icon" type="image/svg+xml" href="{% static 'img/favicon.svg' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="{% url 'landing' %}">
+                <img src="{% static 'img/logo.svg' %}" alt="Nuba Dental" height="40">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'landing' %}">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'landing' %}#servicios">Servicios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'reserva' %}">Reservar Cita</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'contacto' %}">Contacto</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">Admin</a></li>
+                    <li class="nav-item">
+                        <button id="theme-toggle" class="btn btn-sm ms-2" style="background: none; border: 1px solid rgba(255,255,255,0.3); color: white; border-radius: 50%; width: 36px; height: 36px;" title="Modo oscuro">
+                            <span id="theme-icon">🌙</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/56212345678?text=Hola!%20Quiero%20agendar%20una%20cita"
+       target="_blank"
+       class="whatsapp-float"
+       title="Escríbenos por WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="white" width="32" height="32">
+            <path d="M16 0C7.2 0 0 7.2 0 16c0 2.9.8 5.7 2.3 8.1L0 32l8.2-2.2C10.5 31.3 13.2 32 16 32c8.8 0 16-7.2 16-16S24.8 0 16 0zm0 29c-2.4 0-4.7-.6-6.7-1.8l-.5-.3-4.9 1.3 1.3-4.8-.3-.5C3.6 20.8 3 18.5 3 16 3 8.8 8.8 3 16 3s13 5.8 13 13-5.8 13-13 13z"/>
+            <path d="M22.5 17.5c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.1-.1.2-.3.2-.5.1-.9-.5-1.9-1.1-2.7-1.9-.7-.7-1.2-1.5-1.4-2.4 0-.2 0-.4.2-.5.1-.1.2-.2.2-.4.1-.1.1-.2.1-.4 0-.2-.1-.4-.2-.5-.1-.1-.9-2.2-1.2-3-.1-.4-.5-.4-.6-.4h-.5c-.2 0-.5.1-.8.4-.3.3-1.1 1.1-1.1 2.7s1.1 3.1 1.3 3.4c.1.1 2.3 3.5 5.6 4.9 3.3 1.4 3.3.9 3.9.9.6 0 1.9-.8 2.2-1.6.3-.8.3-1.5.2-1.6-.1-.1-.2-.1-.4-.2z"/>
+        </svg>
+    </a>
+
+    <footer class="text-center py-5 mt-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <img src="{% static 'img/logo.svg' %}" alt="Nuba Dental" height="30" class="mb-2 logo-footer">
+                    <p class="small mt-2">Tu sonrisa, nuestra prioridad.</p>
+                </div>
+                <div class="col-md-3">
+                    <h6 class="fw-bold mb-3">Enlaces</h6>
+                    <p class="small mb-1"><a href="{% url 'reserva' %}" class="footer-link">Reservar Cita</a></p>
+                    <p class="small mb-1"><a href="{% url 'calendario' %}" class="footer-link">Calendario</a></p>
+                    <p class="small mb-1"><a href="{% url 'contacto' %}" class="footer-link">Contacto</a></p>
+                    <p class="small"><a href="{% url 'admin:index' %}" class="footer-link">Admin</a></p>
+                </div>
+                <div class="col-md-3">
+                    <h6 class="fw-bold mb-3">Contacto</h6>
+                    <p class="small mb-1">+56 2 1234 5678</p>
+                    <p class="small mb-1">contacto@nubadental.cl</p>
+                    <p class="small">Santiago, Chile</p>
+                </div>
+                <div class="col-md-3">
+                    <h6 class="fw-bold mb-3">Horarios</h6>
+                    <p class="small mb-1">Lun–Vie: 09:00 – 14:00 · 16:00 – 19:00</p>
+                    <p class="small">Sáb: 09:00 – 13:00</p>
+                </div>
+            </div>
+            <hr class="my-4 footer-hr">
+            <p class="small mb-0">© 2026 Nuba Dental — Clínica Dental Integral. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Dark mode toggle
+        (function() {
+            const html = document.documentElement;
+            const btn = document.getElementById('theme-toggle');
+            const icon = document.getElementById('theme-icon');
+            const saved = localStorage.getItem('theme') || 'light';
+
+            function setTheme(t) {
+                html.setAttribute('data-theme', t);
+                icon.textContent = t === 'dark' ? '☀️' : '🌙';
+                localStorage.setItem('theme', t);
+            }
+
+            setTheme(saved);
+
+            if (btn) {
+                btn.addEventListener('click', function() {
+                    const current = html.getAttribute('data-theme');
+                    setTheme(current === 'dark' ? 'light' : 'dark');
+                });
+            }
+        })();
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

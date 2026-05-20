@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h2 style="color: #264653;">Recordatorio de Cita</h2>
+    <p>Hola <strong>{{ cita.paciente.nombre }}</strong>,</p>
+    <p>Te recordamos que tienes una cita agendada en <strong>Nuba Dental</strong>:</p>
+
+    <table style="width: 100%; max-width: 500px; border-collapse: collapse; margin: 20px 0;">
+        <tr><td style="padding: 8px; border-bottom: 1px solid #eee; color: #666;">Dentista</td>
+            <td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">{{ cita.dentista.nombre }}</td></tr>
+        <tr><td style="padding: 8px; border-bottom: 1px solid #eee; color: #666;">Fecha</td>
+            <td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">{{ cita.fecha|date:"d/m/Y" }}</td></tr>
+        <tr><td style="padding: 8px; border-bottom: 1px solid #eee; color: #666;">Hora</td>
+            <td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">{{ cita.hora|time:"H:i" }}</td></tr>
+        <tr><td style="padding: 8px; color: #666;">Dirección</td>
+            <td style="padding: 8px; font-weight: bold;">Santiago, Chile</td></tr>
+    </table>
+
+    <p style="font-size: 14px;">Si no puedes asistir, por favor avísanos con anticipación.</p>
+    <p style="font-size: 14px; color: #999;">Nuba Dental — <a href="{{ site_url }}" style="color: #2a9d8f;">nubadental.cl</a></p>
+</body>
+</html>

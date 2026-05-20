@@ -1,0 +1,130 @@
+{% extends 'citas/base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center mb-4 fw-bold" style="color: #264653;">Reservar Cita</h2>
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+
+                        <div class="row g-3">
+                            <h5 class="fw-bold" style="color: #264653;">Datos del Paciente</h5>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">{{ form.nombre.label }}</label>
+                                {{ form.nombre }}
+                                {% if form.nombre.errors %}<small class="text-danger">{{ form.nombre.errors.0 }}</small>{% endif %}
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label fw-semibold">{{ form.rut.label }}</label>
+                                {{ form.rut }}
+                                {% if form.rut.errors %}<small class="text-danger">{{ form.rut.errors.0 }}</small>{% endif %}
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label fw-semibold">{{ form.telefono.label }}</label>
+                                {{ form.telefono }}
+                                {% if form.telefono.errors %}<small class="text-danger">{{ form.telefono.errors.0 }}</small>{% endif %}
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">{{ form.correo.label }}</label>
+                                {{ form.correo }}
+                                {% if form.correo.errors %}<small class="text-danger">{{ form.correo.errors.0 }}</small>{% endif %}
+                            </div>
+
+                            <hr class="my-2">
+                            <h5 class="fw-bold" style="color: #264653;">Detalles de la Cita</h5>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">{{ form.dentista.label }}</label>
+                                {{ form.dentista }}
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label fw-semibold">{{ form.fecha.label }}</label>
+                                {{ form.fecha }}
+                                {% if form.fecha.errors %}<small class="text-danger">{{ form.fecha.errors.0 }}</small>{% endif %}
+                            </div>
+
+                            <div class="col-md-3">
+                                <label class="form-label fw-semibold">{{ form.hora.label }}</label>
+                                {{ form.hora }}
+                                {% if form.hora.errors %}<small class="text-danger">{{ form.hora.errors.0 }}</small>{% endif %}
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">{{ form.notas.label }}</label>
+                                {{ form.notas }}
+                            </div>
+
+                            <div class="col-12 mt-3">
+                                <button type="submit" class="btn w-100 fw-bold text-white" style="background-color: #e76f51;">Confirmar Reserva</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const dentistaSelect = document.getElementById('id_dentista');
+        const fechaInput = document.getElementById('id_fecha');
+        const horaSelect = document.getElementById('id_hora');
+        const allOptions = Array.from(horaSelect.options);
+
+        function actualizarHorarios() {
+            const dentistaId = dentistaSelect.value;
+            const fecha = fechaInput.value;
+
+            // Reset to default
+            horaSelect.innerHTML = '<option value="">Selecciona hora</option>';
+            allOptions.forEach(function (opt) {
+                if (opt.value) {
+                    opt.disabled = false;
+                    horaSelect.appendChild(opt.cloneNode(true));
+                }
+            });
+
+            if (!dentistaId || !fecha) return;
+
+            fetch('/api/disponibilidad/' + dentistaId + '/?fecha=' + fecha)
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    if (!data.horarios) return;
+                    const disponibles = {};
+                    data.horarios.forEach(function (h) { disponibles[h.hora] = true; });
+
+                    Array.from(horaSelect.options).forEach(function (opt) {
+                        if (opt.value && !disponibles[opt.value]) {
+                            opt.disabled = true;
+                        }
+                    });
+
+                    if (horaSelect.value && horaSelect.options[horaSelect.selectedIndex]?.disabled) {
+                        horaSelect.value = '';
+                    }
+                })
+                .catch(function () { });
+        }
+
+        dentistaSelect.addEventListener('change', actualizarHorarios);
+        fechaInput.addEventListener('change', actualizarHorarios);
+    });
+</script>
+{% endblock %}

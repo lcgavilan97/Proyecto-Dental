@@ -1,0 +1,53 @@
+{% extends 'citas/base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center mb-4 fw-bold" style="color: var(--primary);">Contacto</h2>
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">{{ form.nombre.label }}</label>
+                                {{ form.nombre }}
+                                {% if form.nombre.errors %}<small class="text-danger">{{ form.nombre.errors.0 }}</small>{% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">{{ form.email.label }}</label>
+                                {{ form.email }}
+                                {% if form.email.errors %}<small class="text-danger">{{ form.email.errors.0 }}</small>{% endif %}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">{{ form.telefono.label }}</label>
+                                {{ form.telefono }}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">{{ form.mensaje.label }}</label>
+                                {{ form.mensaje }}
+                                {% if form.mensaje.errors %}<small class="text-danger">{{ form.mensaje.errors.0 }}</small>{% endif %}
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn w-100 fw-bold text-white" style="background-color: var(--accent);">Enviar Mensaje</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-3" style="color: var(--secondary);">Información</h5>
+                    <p class="mb-2"><strong>Teléfono:</strong><br>+56 2 1234 5678</p>
+                    <p class="mb-2"><strong>Email:</strong><br>contacto@nubadental.cl</p>
+                    <p class="mb-2"><strong>Dirección:</strong><br>Santiago, Chile</p>
+                    <p><strong>Horarios:</strong><br>Lun–Vie 09:00–14:00 / 16:00–19:00<br>Sáb 09:00–13:00</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

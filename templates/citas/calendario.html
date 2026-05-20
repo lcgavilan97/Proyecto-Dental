@@ -1,0 +1,51 @@
+{% extends 'citas/base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center mb-4 fw-bold" style="color: var(--primary);">Calendario de Citas</h2>
+
+    <div class="row justify-content-center mb-4">
+        <div class="col-lg-6">
+            <form method="get" class="d-flex gap-2">
+                <input type="text" name="rut" class="form-control" placeholder="Ingresa tu RUT (ej: 12.345.678-9)" value="{{ rut }}">
+                <button type="submit" class="btn fw-bold text-white" style="background-color: var(--secondary);">Buscar</button>
+            </form>
+        </div>
+    </div>
+
+    {% if rut %}
+    <p class="text-center text-muted mb-4">{{ mes }}</p>
+    <div class="table-responsive">
+        <table class="table table-bordered text-center">
+            <thead class="text-white" style="background-color: var(--secondary);">
+                <tr>
+                    <th>Lunes</th><th>Martes</th><th>Miércoles</th><th>Jueves</th><th>Viernes</th><th>Sábado</th><th>Domingo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for semana in semanas %}
+                <tr>
+                    {% for dia in semana %}
+                    <td class="{% if dia.hoy %}table-active fw-bold{% endif %} {% if not dia.mes_actual %}text-muted{% endif %}" style="height: 100px; width: 14%; vertical-align: top; padding: 6px;">
+                        <small>{{ dia.fecha|date:"d" }}</small>
+                        {% for cita in dia.citas %}
+                        <div class="badge d-block mt-1 {{ cita.estado|yesno:'bg-success,bg-warning text-dark,bg-danger' }}" style="font-size: 10px; white-space: normal;">
+                            {{ cita.hora|time:"H:i" }}
+                        </div>
+                        {% empty %}
+                        {% if dia.mes_actual %}<small class="text-muted d-block mt-2">—</small>{% endif %}
+                        {% endfor %}
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="text-center py-5 text-muted">
+        <p>Ingresa tu RUT para ver tus citas en el calendario.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

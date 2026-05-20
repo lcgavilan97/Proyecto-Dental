@@ -1,0 +1,76 @@
+{% extends 'citas/base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center mb-4 fw-bold" style="color: var(--primary);">Mis Citas</h2>
+
+    <div class="row justify-content-center mb-4">
+        <div class="col-lg-6">
+            <form method="get" class="d-flex gap-2">
+                <input type="text" name="rut" class="form-control" placeholder="Ingresa tu RUT (ej: 12.345.678-9)" value="{{ request.GET.rut|default:'' }}">
+                <button type="submit" class="btn fw-bold text-white" style="background-color: var(--secondary);">Buscar</button>
+            </form>
+        </div>
+    </div>
+
+    {% if request.GET.rut %}
+        {% if citas %}
+        <div class="card shadow-sm border-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="text-white" style="background-color: var(--primary);">
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Dentista</th>
+                            <th>Estado</th>
+                            <th>Notas</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cita in citas %}
+                        <tr>
+                            <td>{{ cita.fecha|date:"d/m/Y" }}</td>
+                            <td>{{ cita.hora|time:"H:i" }}</td>
+                            <td>{{ cita.dentista.nombre }} ({{ cita.dentista.especialidad }})</td>
+                            <td>
+                                {% if cita.estado == 'confirmada' %}
+                                <span class="badge bg-success">Confirmada</span>
+                                {% elif cita.estado == 'pendiente' %}
+                                <span class="badge bg-warning text-dark">Pendiente</span>
+                                {% else %}
+                                <span class="badge bg-danger">Cancelada</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ cita.notas|default:"-" }}</td>
+                            <td>
+                                {% if cita.estado != 'cancelada' %}
+                                <form method="post" action="{% url 'cancelar_cita' cita.id %}" onsubmit="return confirm('¿Cancelar esta cita?');">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="rut" value="{{ request.GET.rut }}">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Cancelar</button>
+                                </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <p class="text-muted">No se encontraron citas para el RUT ingresado.</p>
+        </div>
+        {% endif %}
+    <div class="text-center mt-3">
+        <a href="{% url 'calendario' %}?rut={{ request.GET.rut }}" class="btn btn-outline-secondary">Ver en Calendario</a>
+    </div>
+    {% else %}
+        <div class="text-center py-5 text-muted">
+            <p>Ingresa tu RUT para buscar tus citas.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
